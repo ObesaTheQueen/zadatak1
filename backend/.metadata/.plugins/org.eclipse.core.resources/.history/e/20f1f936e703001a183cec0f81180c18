@@ -1,6 +1,0 @@
-package hr.combis.security;
-
-@EnableWebSecurity
-public class WebSecurity {
-
-}
