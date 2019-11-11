@@ -1,0 +1,12 @@
+package hr.combis.config;
+
+@ConfigurationProperties("app.file")
+public class FileProperties {
+
+    /**
+     * IP of foo service used to blah.
+     */
+    private String person = 127.0.0.1;
+
+    // getter & setter
+}

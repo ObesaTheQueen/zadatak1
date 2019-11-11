@@ -1,0 +1,5 @@
+package hr.combis.security;
+
+public class WebSecurity {
+
+}

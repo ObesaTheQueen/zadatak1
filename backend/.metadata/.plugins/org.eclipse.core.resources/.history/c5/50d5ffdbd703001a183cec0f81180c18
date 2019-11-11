@@ -1,0 +1,11 @@
+package hr.combis.model;
+
+import java.util.List;
+
+@Data
+public class RestResponse {
+	
+	private List<Person> data;
+	private Error error;
+
+}
