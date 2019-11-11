@@ -6,11 +6,11 @@ backend/.metadata/
 # See http://help.github.com/ignore-files/ for more about ignoring files.
 
 # compiled output
-/dist
-/tmp
+dist/
+tmp/
 /out-tsc
 /vendor
-/app/logs
+app/logs/
 # dependencies
 /node_modules
 
