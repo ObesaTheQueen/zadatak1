@@ -1,0 +1,6 @@
+package hr.combis.service;
+
+public interface PersonService {
+
+	public List<Person> loadDataFromFile();
+}

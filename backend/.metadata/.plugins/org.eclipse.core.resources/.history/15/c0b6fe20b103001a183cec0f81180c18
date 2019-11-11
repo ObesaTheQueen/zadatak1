@@ -1,0 +1,5 @@
+package hr.combis.service;
+
+public interface PersonService {
+
+}

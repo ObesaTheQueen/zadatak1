@@ -1,0 +1,36 @@
+<!--The content below is only a placeholder and can be replaced.-->
+
+<p-table [columns]="cols" [value]="tableData" [scrollable]="true" scrollHeight="250px">
+        <ng-template pTemplate="header" let-columns>
+            <tr>
+                <th *ngFor="let col of columns">
+                    {{col.header}}
+                </th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-rowData let-columns="columns" >
+               
+            <tr  [ngClass]="rowData.exists ? 'red_row' : null">
+                <td *ngFor="let col of columns" >
+                  <!--  <span [pTooltip]="rowData[col.field]" appendTo="body" 
+                    style="position: relative;" [tooltipDisabled]="!rowData[col.field].exists">-->
+                        {{rowData[col.field]}}
+                   <!-- </span>-->
+                </td>
+            </tr>
+
+        </ng-template>
+    </p-table>
+    <div *ngIf="errorMessage"
+        class="alert alert-danger">
+        Error: {{ errorMessage }}
+    </div>
+
+  
+
+
+
+
+ 
+
+      

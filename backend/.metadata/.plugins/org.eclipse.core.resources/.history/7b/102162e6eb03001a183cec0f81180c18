@@ -1,0 +1,22 @@
+package hr.combis.security;
+
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+
+@EnableWebSecurity
+public class WebSecurity {
+
+	protected void configure(HttpSecurity http) throws Exception {
+		http.cors().and().csrf().disable().authorizeRequests().antMatchers(HttpMethod.POST,
+				 "/users/sign-up", "/users/login", "/users/logout", "/events/**", "/orgUnits/**").permitAll()
+				.antMatchers(HttpMethod.GET,
+				 "/users/sign-up", "/users/login", "/users/logout", "/events/**", "/orgUnits/**").permitAll()
+				// any other request should be authenticated
+				.anyRequest().authenticated().and()
+				// add the filters to be used
+				.addFilter(new JWTAuthenticationFilter(authenticationManager(), userRepository, jwtSecret))
+				.addFilter(new JWTAuthorizationFilter(authenticationManager(), jwtSecret))
+				// we don't want sessions for our application
+				.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+	}
+}

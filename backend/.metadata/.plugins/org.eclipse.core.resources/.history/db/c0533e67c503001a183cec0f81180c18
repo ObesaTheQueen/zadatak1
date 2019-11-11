@@ -1,0 +1,64 @@
+package hr.combis;
+
+import java.util.Locale;
+
+import org.junit.jupiter.api.Test;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.context.MessageSource;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Import;
+import org.springframework.context.support.ReloadableResourceBundleMessageSource;
+import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.util.CollectionUtils;
+
+import hr.combis.enums.ERROR_CODE;
+import hr.combis.model.Person;
+import hr.combis.repository.IPersonRepository;
+import hr.combis.service.IPersonService;
+
+//@SpringBootTest
+@RunWith(SpringRunner.class)
+@SpringBootTest(classes = Application.class)
+//@Import(TestConfig.class)
+class ApplicationTests {
+	@Autowired
+	IPersonRepository iPersonRepository;
+	
+	@Autowired
+	IPersonService iPersonService;
+	
+	@Autowired
+	MessageSource messages;
+	
+	@Test
+	public void findPerson() {
+		Person person = iPersonRepository.findByFirstNameAndLastNameAndZipCodeAndCityAndPhone(
+				"aa", "aa", 10000, "aa", "aa");
+		assert(person != null);
+	}
+	
+	@Test
+	public void findPersonNoPhone() {
+		Person person = iPersonRepository.findByFirstNameAndLastNameAndZipCodeAndCityAndPhone(
+				"bb", "bb", 10000, "aa", null);
+		assert(person != null);
+	}
+	
+	@Test
+	public void loadPersonData() {
+//		iPersonService.loadDataFromFile();
+		assert(true);
+	}
+	
+	@Test
+	public void checkErrorMsgs() {
+//		Person person = new Person();
+//		person.setZipCodeString("aaa");
+		String mm = messages.getMessage(ERROR_CODE.ERR_WRONG_ZIP_CODE.getErrorCode(),null, Locale.ENGLISH);
+		assert(true);
+	}
+	
+
+}

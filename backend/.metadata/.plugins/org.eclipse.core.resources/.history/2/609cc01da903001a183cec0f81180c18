@@ -1,0 +1,16 @@
+package hr.combis.controllers;
+
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+@RestController
+@RequestMapping("/persons")
+public class PersonDataController {
+
+	@RequestMapping(value = "/listEvents", method = RequestMethod.POST)
+	public ResponseEntity<List<Person>> getEvents(@RequestBody FilterEvents filter) {
+		
+		
+		return null;
+	}
+}

@@ -1,0 +1,5 @@
+package hr.combis.exceptions;
+
+public class BusinessInfrastructureException {
+
+}

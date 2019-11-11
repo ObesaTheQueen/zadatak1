@@ -1,0 +1,89 @@
+package hr.combis.service;
+
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.persistence.Transient;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.support.MessageSourceAccessor;
+import org.springframework.stereotype.Service;
+
+import hr.combis.enums.ERROR_CODE;
+import hr.combis.model.Person;
+
+@Service
+public class PersonServiceImpl implements IPersonService {
+
+	@Value("${app.file.person}")
+	private String personPath;
+
+	@Autowired
+	MessageSourceAccessor message;
+	
+	public List<Person> loadDataFromFile(){
+	 	BufferedReader br = null;
+        String line = "";
+        String cvsSplitBy = ";";
+        ArrayList<Person> persons = new ArrayList<Person>();
+        try {
+
+            br = new BufferedReader(new FileReader(personPath));
+            while ((line = br.readLine()) != null) {
+
+                String[] personRow = line.split(cvsSplitBy);
+                //napuniti beanove
+                Person person = new Person();
+                if(personRow[0] != null)
+                	person.setFirstName(personRow[0]);
+                else
+                	person.addErrorMsg(message.getMessage(ERROR_CODE.ERR_MANDATORY.getErrorCode(), "ime"));
+                
+                if(personRow[1] != null)
+                	person.setLastName(personRow[1]);
+                else
+                	person.addErrorMsg(message.getMessage(ERROR_CODE.ERR_MANDATORY.getErrorCode(), "prezime"));
+                
+                if(personRow[2] != null)
+                	person.setZipCodeString(personRow[2],message.getMessage(ERROR_CODE.ERR_WRONG_ZIP_CODE.getErrorCode()));
+                else
+                	person.addErrorMsg(message.getMessage(ERROR_CODE.ERR_MANDATORY.getErrorCode(), "poštanski broj"));
+                
+                if(personRow[3] != null)
+                	person.setCity(personRow[3]);
+                else
+                	person.addErrorMsg(message.getMessage(ERROR_CODE.ERR_MANDATORY.getErrorCode(), "grad"));
+                
+                if(personRow[4] != null)
+                	person.setPhone(personRow[4]);
+                
+                persons.add(person);
+                
+
+            }
+            
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            if (br != null) {
+                try {
+                    br.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }    
+		
+		return persons;
+	}
+
+	
+	
+}

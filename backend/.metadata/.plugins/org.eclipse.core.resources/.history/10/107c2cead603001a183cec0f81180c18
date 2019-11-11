@@ -1,0 +1,12 @@
+package hr.combis.model;
+
+import java.util.Map;
+
+
+public class RestResponse {
+	
+	private List<Person> data;
+	private Error error;
+
+	
+}
