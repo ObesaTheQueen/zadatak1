@@ -13,6 +13,8 @@ import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { AccordionModule } from 'primeng/components/accordion/accordion';  
 import {OrderListModule} from 'primeng/orderlist'; 
 import {ButtonModule} from 'primeng/button';
+import {ToastModule} from 'primeng/toast';
+import {MessageService} from 'primeng/api';
 @NgModule({
   declarations: [
     AppComponent
@@ -30,9 +32,10 @@ import {ButtonModule} from 'primeng/button';
     MessageModule,
     FormsModule,
     ReactiveFormsModule,
-    ButtonModule
+    ButtonModule,
+    ToastModule
   ],
-  providers: [],
+  providers: [MessageService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

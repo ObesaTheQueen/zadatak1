@@ -1,25 +1,24 @@
 <!--The content below is only a placeholder and can be replaced.-->
+<p-toast [style]="{marginTop: '80px'}" position="top-center" key="tc"></p-toast>
 <div class="ui-g"> 
     <div class="ui-g-1"> 
-    <p-button label="Učitaj" *ngIf="loadButt"  (onClick)="loadPersonData()" ></p-button>
+    <p-button label="Učitaj" [disabled]="loadButt" styleClass="myButton" (onClick)="loadPersonData()" ></p-button>
     </div>
     <div class="ui-g-1"> 
-      <!--<p-button label="Izvještaj" *ngIf="detailsButt"  (onClick)="getReport()" ></p-button> application/octet-stream-->
-      <p-button label="Spremi" *ngIf="saveButt"  (click)="savePersonData()"></p-button>
+
+      <p-button label="Spremi" [disabled]="saveButt" styleClass="myButton"  (onClick)="savePersonData()"></p-button>
      
       </div>
 </div>
-<p-table [columns]="cols" [value]="tableData" [scrollable]="true" scrollHeight="250px">
-        <ng-template pTemplate="header" let-columns>
-            <tr>
-                <th *ngFor="let col of columns">
-                    {{col.header}}
-                </th>
-            </tr>
+<p-table [columns]="cols" [value]="tableData" [scrollable]="true" scrollHeight="400px" [resizableColumns]="true">
+        <ng-template pTemplate="colgroup" let-columns >
+            <colgroup>
+                <col *ngFor="let col of columns" [style.width]="col.width">
+            </colgroup>
         </ng-template>
         <ng-template pTemplate="body" let-rowData let-columns="columns" >
                
-            <tr  [ngClass]="rowData.exists ? 'red_row' : null">
+            <tr  [ngClass]="rowData.errorMsgs != null?  'red_row' : null">
                 <td *ngFor="let col of columns" >
                   <!--  <span [pTooltip]="rowData[col.field]" appendTo="body" 
                     style="position: relative;" [tooltipDisabled]="!rowData[col.field].exists">-->

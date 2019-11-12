@@ -39,12 +39,12 @@ public class PersonServiceImpl implements IPersonService {
 	
 	
 	public Document loadDataFromFile() throws BusinessInfrastructureException{
-		return loadDataFromFile(false, null);
+		return loadPersonDataFile(false, null);
 	}
 	/**
 	 *dohvat podataka iz datoteke
 	 */
-	public synchronized Document loadDataFromFile(boolean save, String saveFileHash) throws BusinessInfrastructureException{
+	public synchronized Document loadPersonDataFile(boolean save, String saveFileHash) throws BusinessInfrastructureException{
         String line = "";
         String cvsSplitBy = ";";
         ArrayList<Person> persons = new ArrayList<Person>();
@@ -58,29 +58,36 @@ public class PersonServiceImpl implements IPersonService {
             	hashString+=line;
                 String[] personRow = line.split(cvsSplitBy);
                 Person person = new Person();
-                if(!StringUtils.isEmpty(personRow[0]))
+                if(personRow.length > 0 && !StringUtils.isEmpty(personRow[0]))
                 	person.setFirstName(personRow[0]);
                 else
                 	person.addErrorMsg(message.getMessage(ERROR_CODE.ERR_MANDATORY.getErrorCode(), new Object[] {"ime"}));
                 
-                if(!StringUtils.isEmpty(personRow[1]))
+                if(personRow.length > 1 && !StringUtils.isEmpty(personRow[1]))
                 	person.setLastName(personRow[1]);
                 else
                 	person.addErrorMsg(message.getMessage(ERROR_CODE.ERR_MANDATORY.getErrorCode(), new Object[] {"prezime"}));
                 
-                if(!StringUtils.isEmpty(personRow[2]))
+                if(personRow.length > 2 && !StringUtils.isEmpty(personRow[2]))
                 	person.setZipCodeString(personRow[2],message.getMessage(ERROR_CODE.ERR_WRONG_ZIP_CODE.getErrorCode()));
                 else
                 	person.addErrorMsg(message.getMessage(ERROR_CODE.ERR_MANDATORY.getErrorCode(), new Object[] {"poštanski broj"}));
                 
-                if(!StringUtils.isEmpty(personRow[3]))
+                if(personRow.length > 3 && !StringUtils.isEmpty(personRow[3]))
                 	person.setCity(personRow[3]);
                 else
                 	person.addErrorMsg(message.getMessage(ERROR_CODE.ERR_MANDATORY.getErrorCode(), new Object[] {"grad"}));
                 
-                if(!StringUtils.isEmpty(personRow[4]))
+                if(personRow.length > 4 && !StringUtils.isEmpty(personRow[4]))
                 	person.setPhone(personRow[4]);
-  
+                
+                if(CollectionUtils.isEmpty(person.getErrorMsgs())){
+	                Person oldPerson = iPersonRepository.findByFirstNameAndLastNameAndZipCodeAndCityAndPhone(
+		                		person.getFirstName(), person.getLastName(), person.getZipCode(), person.getCity(), person.getPhone());
+	                if(oldPerson != null) {
+	                	person.addErrorMsg(message.getMessage(ERROR_CODE.ERR_ROW_EXISTS.getErrorCode()));
+	                }
+                }
                 persons.add(person);
 
             }
@@ -92,11 +99,12 @@ public class PersonServiceImpl implements IPersonService {
             if(save) {
             	if(currDocHash.equals(saveFileHash)) {
 		            for(Person person:doc.getPersons()) {
-		    			if(CollectionUtils.isEmpty(person.getErrorMsgs())) {
-		    				 Person oldPerson = iPersonRepository.findByFirstNameAndLastNameAndZipCodeAndCityAndPhone(
-		 	                		person.getFirstName(), person.getLastName(), person.getZipCode(), person.getCity(), person.getPhone());
-		    				 if(oldPerson != null)
-		    					 iPersonRepository.save(person);
+		    			if(CollectionUtils.isEmpty(person.getErrorMsgs()) ) {
+		    				Person oldPerson = iPersonRepository.findByFirstNameAndLastNameAndZipCodeAndCityAndPhone(
+				                		person.getFirstName(), person.getLastName(), person.getZipCode(), person.getCity(), person.getPhone());
+			                if(oldPerson == null) {
+			                	iPersonRepository.save(person);
+			                }
 		    			}
 		    				
 		    		}

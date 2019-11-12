@@ -55,9 +55,12 @@ public class Person {
 
 	public void setZipCodeString(String zipCodeString, String errorMsg) {
 		Integer zipCode;
+		this.setZipCodeString(zipCodeString);
 		try {
+			
 			zipCode = Integer.valueOf(zipCodeString);
 			this.setZipCode(zipCode);
+			
 		}catch(NumberFormatException ex) {
 			addErrorMsg(errorMsg);
 

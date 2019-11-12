@@ -1,5 +1,8 @@
 package hr.combis.exceptions;
 
+import lombok.Data;
+
+
 public class BusinessInfrastructureException extends Exception {
 	
 	/**
@@ -10,4 +13,5 @@ public class BusinessInfrastructureException extends Exception {
 	public BusinessInfrastructureException(String message) {
 		super(message);
 	}
+
 }

@@ -29,3 +29,7 @@ div.card {
 .ui-table-scrollable-header {
   overflow-y: scroll;
   }
+
+  .myButton {
+    width: 90px;
+  }

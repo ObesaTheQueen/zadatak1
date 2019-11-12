@@ -49,7 +49,7 @@ public class ExceptionController {
 //    	logger.error("Failed URL: " + pHttpServletRequest.getRequestURL() + " Exception: ", businessInfrastructureException);
     	RestResponse tResponse = new RestResponse();
     	tResponse.setError(new Error(HttpStatus.INTERNAL_SERVER_ERROR.toString(), businessInfrastructureException.getMessage()));
-    	return new ResponseEntity<>(tResponse, HttpStatus.BAD_REQUEST);
+    	return new ResponseEntity<>(tResponse, HttpStatus.OK);
     }
     
     @ExceptionHandler(value = Exception.class)
