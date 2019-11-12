@@ -46,6 +46,14 @@ public class ExceptionController {
     
     @ExceptionHandler(value = BusinessInfrastructureException.class)
     public ResponseEntity<RestResponse> businessinfrastructureException(HttpServletRequest pHttpServletRequest, BusinessInfrastructureException businessInfrastructureException) {
+//    	logger.error("Failed URL: " + pHttpServletRequest.getRequestURL() + " Exception: ", businessInfrastructureException);
+    	RestResponse tResponse = new RestResponse();
+    	tResponse.setError(new Error(HttpStatus.INTERNAL_SERVER_ERROR.toString(), businessInfrastructureException.getMessage()));
+    	return new ResponseEntity<>(tResponse, HttpStatus.BAD_REQUEST);
+    }
+    
+    @ExceptionHandler(value = Exception.class)
+    public ResponseEntity<RestResponse> generalException(HttpServletRequest pHttpServletRequest, BusinessInfrastructureException businessInfrastructureException) {
     	logger.error("Failed URL: " + pHttpServletRequest.getRequestURL() + " Exception: ", businessInfrastructureException);
     	RestResponse tResponse = new RestResponse();
     	tResponse.setError(new Error(HttpStatus.INTERNAL_SERVER_ERROR.toString(), businessInfrastructureException.getMessage()));

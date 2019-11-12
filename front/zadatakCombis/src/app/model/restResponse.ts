@@ -1,9 +1,9 @@
-import { Person } from './person';
+import { Document } from './document';
 import { Error } from './error';
 
 export interface RestResponse {
     error: Error;
-    data: Person[];
+    data: Document;
 }
 
 export class RestResponseResolved {

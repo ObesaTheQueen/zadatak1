@@ -6,12 +6,13 @@ import { AppComponent } from './app.component';
 import {TableModule} from 'primeng/table';
 import { HttpClientModule } from '@angular/common/http';
 import {TooltipModule} from 'primeng/tooltip';
-
-
-import { BrowserAnimationsModule } from "@angular/platform-browser/animations";  
-
+import {MessagesModule} from 'primeng/messages';
+import {MessageModule} from 'primeng/message';
+import { FormsModule, ReactiveFormsModule} from '@angular/forms';
+import { BrowserAnimationsModule } from "@angular/platform-browser/animations"; 
 import { AccordionModule } from 'primeng/components/accordion/accordion';  
 import {OrderListModule} from 'primeng/orderlist'; 
+import {ButtonModule} from 'primeng/button';
 @NgModule({
   declarations: [
     AppComponent
@@ -24,7 +25,12 @@ import {OrderListModule} from 'primeng/orderlist';
     BrowserAnimationsModule,
     AccordionModule,
     OrderListModule,
-    TooltipModule
+    TooltipModule,
+    MessagesModule,
+    MessageModule,
+    FormsModule,
+    ReactiveFormsModule,
+    ButtonModule
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -1,11 +1,10 @@
 package hr.combis.service;
 
-import java.util.List;
-
 import hr.combis.exceptions.BusinessInfrastructureException;
-import hr.combis.model.Person;
+import hr.combis.model.Document;
 
 public interface IPersonService {
 
-	public List<Person> loadDataFromFile() throws BusinessInfrastructureException;
+	public Document loadDataFromFile(boolean save, String saveFileHash) throws BusinessInfrastructureException;
+	public Document loadDataFromFile() throws BusinessInfrastructureException;
 }

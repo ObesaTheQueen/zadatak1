@@ -1,5 +1,14 @@
 <!--The content below is only a placeholder and can be replaced.-->
-
+<div class="ui-g"> 
+    <div class="ui-g-1"> 
+    <p-button label="Učitaj" *ngIf="loadButt"  (onClick)="loadPersonData()" ></p-button>
+    </div>
+    <div class="ui-g-1"> 
+      <!--<p-button label="Izvještaj" *ngIf="detailsButt"  (onClick)="getReport()" ></p-button> application/octet-stream-->
+      <p-button label="Spremi" *ngIf="saveButt"  (click)="savePersonData()"></p-button>
+     
+      </div>
+</div>
 <p-table [columns]="cols" [value]="tableData" [scrollable]="true" scrollHeight="250px">
         <ng-template pTemplate="header" let-columns>
             <tr>
@@ -21,10 +30,10 @@
 
         </ng-template>
     </p-table>
-    <div *ngIf="errorMessage"
-        class="alert alert-danger">
-        Error: {{ errorMessage }}
-    </div>
+
+   
+
+    <p-messages [(value)]="msgs"></p-messages>
 
   
 

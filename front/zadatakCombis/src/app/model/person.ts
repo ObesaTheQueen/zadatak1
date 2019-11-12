@@ -2,7 +2,7 @@ export class Person {
     personId: number;
     lastName: string;
     firstName: string;
-    zipCode: number;
+    zipCodeString: string;
     city: string;
     phone: string;
     errorMsgs: string[];

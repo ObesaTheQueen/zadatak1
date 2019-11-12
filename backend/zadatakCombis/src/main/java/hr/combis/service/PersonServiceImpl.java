@@ -8,6 +8,7 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -19,6 +20,7 @@ import org.springframework.util.CollectionUtils;
 
 import hr.combis.enums.ERROR_CODE;
 import hr.combis.exceptions.BusinessInfrastructureException;
+import hr.combis.model.Document;
 import hr.combis.model.Person;
 import hr.combis.repository.IPersonRepository;
 
@@ -35,18 +37,26 @@ public class PersonServiceImpl implements IPersonService {
 	IPersonRepository iPersonRepository;
 	Logger logger = LoggerFactory.getLogger(PersonServiceImpl.class);
 	
-	public List<Person> loadDataFromFile() throws BusinessInfrastructureException{
-	 	BufferedReader br = null;
+	
+	public Document loadDataFromFile() throws BusinessInfrastructureException{
+		return loadDataFromFile(false, null);
+	}
+	/**
+	 *dohvat podataka iz datoteke
+	 */
+	public synchronized Document loadDataFromFile(boolean save, String saveFileHash) throws BusinessInfrastructureException{
         String line = "";
         String cvsSplitBy = ";";
         ArrayList<Person> persons = new ArrayList<Person>();
-        try {
+        Document doc = null;
+        String hashString="";
+        try (        	
+        		BufferedReader br = 
+        		new BufferedReader(new InputStreamReader(new FileInputStream(personPath), "Cp1250"));){
 
-            br = new BufferedReader(new InputStreamReader(new FileInputStream(personPath), "Cp1250"));
             while ((line = br.readLine()) != null) {
-
+            	hashString+=line;
                 String[] personRow = line.split(cvsSplitBy);
-                //napuniti beanove)
                 Person person = new Person();
                 if(!StringUtils.isEmpty(personRow[0]))
                 	person.setFirstName(personRow[0]);
@@ -70,18 +80,28 @@ public class PersonServiceImpl implements IPersonService {
                 
                 if(!StringUtils.isEmpty(personRow[4]))
                 	person.setPhone(personRow[4]);
-                
-                if(CollectionUtils.isEmpty(person.getErrorMsgs())) {
-	                Person oldPerson = iPersonRepository.findByFirstNameAndLastNameAndZipCodeAndCityAndPhone(
-	                		person.getFirstName(), person.getLastName(), person.getZipCode(), person.getCity(), person.getPhone());
-	                if(oldPerson != null)
-	                	person.setExists(true);
-	                else {
-	                	iPersonRepository.save(person);
-	                }
-                }
+  
                 persons.add(person);
 
+            }
+            doc = new Document();
+            doc.setPersons(persons);
+            String currDocHash = DigestUtils.md5Hex( hashString );
+            doc.setHash( currDocHash);
+            
+            if(save) {
+            	if(currDocHash.equals(saveFileHash)) {
+		            for(Person person:doc.getPersons()) {
+		    			if(CollectionUtils.isEmpty(person.getErrorMsgs())) {
+		    				 Person oldPerson = iPersonRepository.findByFirstNameAndLastNameAndZipCodeAndCityAndPhone(
+		 	                		person.getFirstName(), person.getLastName(), person.getZipCode(), person.getCity(), person.getPhone());
+		    				 if(oldPerson != null)
+		    					 iPersonRepository.save(person);
+		    			}
+		    				
+		    		}
+            	}else
+            		throw new BusinessInfrastructureException("Podaci su u međuvremenu promijenjeni. Učitajte podatke ponovo.");
             }
             
         } catch (FileNotFoundException e) {
@@ -90,22 +110,13 @@ public class PersonServiceImpl implements IPersonService {
         } catch (IOException e) {
         	logger.error("Dogodila se greška kod dohvata datoteke", e);
         	throw new BusinessInfrastructureException("Dogodila se greška kod dohvata datoteke.");
-        } catch (Exception ex){
-        	logger.error("Dogodila se greška u sustavu", ex);
-        	throw new BusinessInfrastructureException("Dogodila se greška u sustavu.");
-        }finally {
-            if (br != null) {
-                try {
-                    br.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
+        } finally {
+           
         }    
 		
-		return persons;
+		return doc;
 	}
-
+	
 	
 	
 }

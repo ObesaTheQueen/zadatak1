@@ -1,7 +1,5 @@
 package hr.combis;
 
-import java.util.List;
-
 import javax.persistence.Transient;
 
 import org.junit.jupiter.api.Test;
@@ -13,7 +11,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.util.CollectionUtils;
 
 import hr.combis.exceptions.BusinessInfrastructureException;
-import hr.combis.model.Person;
+import hr.combis.model.Document;
 import hr.combis.repository.IPersonRepository;
 import hr.combis.service.IPersonService;
 
@@ -32,25 +30,25 @@ class ApplicationTests {
 	MessageSourceAccessor messages;
 
 	
-	@Test
-	public void findPerson() {
-		Person person = iPersonRepository.findByFirstNameAndLastNameAndZipCodeAndCityAndPhone(
-				"aa", "aa", 10000, "aa", "aa");
-		assert(person != null);
-	}
-	
-	@Test
-	public void findPersonNoPhone() {
-		Person person = iPersonRepository.findByFirstNameAndLastNameAndZipCodeAndCityAndPhone(
-				"bb", "bb", 10000, "aa", null);
-		assert(person != null);
-	}
-	
+//	@Test
+//	public void findPerson() {
+//		Person person = iPersonRepository.findByFirstNameAndLastNameAndZipCodeAndCityAndPhone(
+//				"aa", "aa", 10000, "aa", "aa");
+//		assert(person != null);
+//	}
+//	
+//	@Test
+//	public void findPersonNoPhone() {
+//		Person person = iPersonRepository.findByFirstNameAndLastNameAndZipCodeAndCityAndPhone(
+//				"bb", "bb", 10000, "aa", null);
+//		assert(person != null);
+//	}
+//	
 	@Test
 	public void loadPersonData() throws BusinessInfrastructureException {
-		List<Person> persons = personService.loadDataFromFile();
+		Document persons = personService.loadDataFromFile();
 		System.out.println();
-		assert(!CollectionUtils.isEmpty(persons));
+		assert(!CollectionUtils.isEmpty(persons.getPersons()));
 	}
 	
 
