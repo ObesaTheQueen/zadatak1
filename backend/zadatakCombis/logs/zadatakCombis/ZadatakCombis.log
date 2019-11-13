@@ -715,3 +715,47 @@ java.lang.NullPointerException: null
 [2019-11-13 20:41:33,000][INFO ][sid= | uid=][][main | hr.combis.ApplicationTests] :: No active profile set, falling back to default profiles: default
 [2019-11-13 20:41:37,547][INFO ][sid= | uid=][][main | hr.combis.ApplicationTests] :: Started ApplicationTests in 4.82 seconds (JVM running for 5.859)
 [2019-11-13 20:41:37,547][INFO ][sid= | uid=][][main | hr.combis.ApplicationTests] :: Started ApplicationTests in 4.82 seconds (JVM running for 5.859)
+[2019-11-13 20:46:34,292][INFO ][sid= | uid=][][main | hr.combis.ApplicationTests] :: Starting ApplicationTests on DESKTOP-OI40UNV with PID 6152 (started by helena in C:\Users\helena\combis\backend\zadatakCombis)
+[2019-11-13 20:46:34,292][INFO ][sid= | uid=][][main | hr.combis.ApplicationTests] :: Starting ApplicationTests on DESKTOP-OI40UNV with PID 6152 (started by helena in C:\Users\helena\combis\backend\zadatakCombis)
+[2019-11-13 20:46:34,295][DEBUG][sid= | uid=][][main | hr.combis.ApplicationTests] :: Running with Spring Boot v2.2.1.RELEASE, Spring v5.2.1.RELEASE
+[2019-11-13 20:46:34,295][DEBUG][sid= | uid=][][main | hr.combis.ApplicationTests] :: Running with Spring Boot v2.2.1.RELEASE, Spring v5.2.1.RELEASE
+[2019-11-13 20:46:34,297][INFO ][sid= | uid=][][main | hr.combis.ApplicationTests] :: No active profile set, falling back to default profiles: default
+[2019-11-13 20:46:34,297][INFO ][sid= | uid=][][main | hr.combis.ApplicationTests] :: No active profile set, falling back to default profiles: default
+[2019-11-13 20:46:39,006][INFO ][sid= | uid=][][main | hr.combis.ApplicationTests] :: Started ApplicationTests in 5.025 seconds (JVM running for 6.081)
+[2019-11-13 20:46:39,006][INFO ][sid= | uid=][][main | hr.combis.ApplicationTests] :: Started ApplicationTests in 5.025 seconds (JVM running for 6.081)
+[2019-11-13 20:47:29,048][INFO ][sid= | uid=][][main | hr.combis.ApplicationTests] :: Starting ApplicationTests on DESKTOP-OI40UNV with PID 1192 (started by helena in C:\Users\helena\combis\backend\zadatakCombis)
+[2019-11-13 20:47:29,048][INFO ][sid= | uid=][][main | hr.combis.ApplicationTests] :: Starting ApplicationTests on DESKTOP-OI40UNV with PID 1192 (started by helena in C:\Users\helena\combis\backend\zadatakCombis)
+[2019-11-13 20:47:29,048][DEBUG][sid= | uid=][][main | hr.combis.ApplicationTests] :: Running with Spring Boot v2.2.1.RELEASE, Spring v5.2.1.RELEASE
+[2019-11-13 20:47:29,048][DEBUG][sid= | uid=][][main | hr.combis.ApplicationTests] :: Running with Spring Boot v2.2.1.RELEASE, Spring v5.2.1.RELEASE
+[2019-11-13 20:47:29,048][INFO ][sid= | uid=][][main | hr.combis.ApplicationTests] :: No active profile set, falling back to default profiles: default
+[2019-11-13 20:47:29,048][INFO ][sid= | uid=][][main | hr.combis.ApplicationTests] :: No active profile set, falling back to default profiles: default
+[2019-11-13 20:47:33,762][INFO ][sid= | uid=][][main | hr.combis.ApplicationTests] :: Started ApplicationTests in 5.109 seconds (JVM running for 6.41)
+[2019-11-13 20:47:33,762][INFO ][sid= | uid=][][main | hr.combis.ApplicationTests] :: Started ApplicationTests in 5.109 seconds (JVM running for 6.41)
+[2019-11-13 20:56:15,939][INFO ][sid= | uid=][][main | hr.combis.Application] :: Starting Application on DESKTOP-OI40UNV with PID 12764 (C:\Users\helena\combis\backend\zadatakCombis\target\classes started by helena in C:\Users\helena\combis\backend\zadatakCombis)
+[2019-11-13 20:56:15,939][INFO ][sid= | uid=][][main | hr.combis.Application] :: Starting Application on DESKTOP-OI40UNV with PID 12764 (C:\Users\helena\combis\backend\zadatakCombis\target\classes started by helena in C:\Users\helena\combis\backend\zadatakCombis)
+[2019-11-13 20:56:15,939][DEBUG][sid= | uid=][][main | hr.combis.Application] :: Running with Spring Boot v2.2.1.RELEASE, Spring v5.2.1.RELEASE
+[2019-11-13 20:56:15,939][DEBUG][sid= | uid=][][main | hr.combis.Application] :: Running with Spring Boot v2.2.1.RELEASE, Spring v5.2.1.RELEASE
+[2019-11-13 20:56:15,939][INFO ][sid= | uid=][][main | hr.combis.Application] :: No active profile set, falling back to default profiles: default
+[2019-11-13 20:56:15,939][INFO ][sid= | uid=][][main | hr.combis.Application] :: No active profile set, falling back to default profiles: default
+[2019-11-13 20:56:18,797][ERROR][sid= | uid=][][main | o.s.b.d.LoggingFailureAnalysisReporter] :: 
+
+***************************
+APPLICATION FAILED TO START
+***************************
+
+Description:
+
+Web server failed to start. Port 8080 was already in use.
+
+Action:
+
+Identify and stop the process that's listening on port 8080 or configure this application to listen on another port.
+
+[2019-11-13 21:56:20,884][INFO ][sid= | uid=][][main | hr.combis.ApplicationTests] :: Starting ApplicationTests on DESKTOP-OI40UNV with PID 13512 (started by helena in C:\Users\helena\combis\backend\zadatakCombis)
+[2019-11-13 21:56:20,884][INFO ][sid= | uid=][][main | hr.combis.ApplicationTests] :: Starting ApplicationTests on DESKTOP-OI40UNV with PID 13512 (started by helena in C:\Users\helena\combis\backend\zadatakCombis)
+[2019-11-13 21:56:20,892][DEBUG][sid= | uid=][][main | hr.combis.ApplicationTests] :: Running with Spring Boot v2.2.1.RELEASE, Spring v5.2.1.RELEASE
+[2019-11-13 21:56:20,892][DEBUG][sid= | uid=][][main | hr.combis.ApplicationTests] :: Running with Spring Boot v2.2.1.RELEASE, Spring v5.2.1.RELEASE
+[2019-11-13 21:56:20,892][INFO ][sid= | uid=][][main | hr.combis.ApplicationTests] :: No active profile set, falling back to default profiles: default
+[2019-11-13 21:56:20,892][INFO ][sid= | uid=][][main | hr.combis.ApplicationTests] :: No active profile set, falling back to default profiles: default
+[2019-11-13 21:56:25,767][INFO ][sid= | uid=][][main | hr.combis.ApplicationTests] :: Started ApplicationTests in 5.114 seconds (JVM running for 6.165)
+[2019-11-13 21:56:25,767][INFO ][sid= | uid=][][main | hr.combis.ApplicationTests] :: Started ApplicationTests in 5.114 seconds (JVM running for 6.165)

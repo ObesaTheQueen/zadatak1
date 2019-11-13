@@ -140,7 +140,7 @@ public class PersonServiceImpl implements IPersonService {
             
         } catch (FileNotFoundException e) {
         	logger.error("Dogodila se greška kod dohvata datoteke", e);
-            throw new BusinessInfrastructureException("Dogodila se greška kod dohvata datoteke.");
+            throw new BusinessInfrastructureException("Datoteka ne postoji u sustavu.");
         } catch (IOException e) {
         	logger.error("Dogodila se greška kod dohvata datoteke", e);
         	throw new BusinessInfrastructureException("Dogodila se greška kod dohvata datoteke.");
