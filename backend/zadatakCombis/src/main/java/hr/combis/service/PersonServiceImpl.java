@@ -6,7 +6,12 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
-import java.util.List;
+import java.util.Set;
+
+import javax.validation.ConstraintViolation;
+import javax.validation.Validation;
+import javax.validation.Validator;
+import javax.validation.ValidatorFactory;
 
 import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -18,6 +23,7 @@ import org.springframework.context.support.MessageSourceAccessor;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
+import hr.combis.common.ObjectUtil;
 import hr.combis.enums.ERROR_CODE;
 import hr.combis.exceptions.BusinessInfrastructureException;
 import hr.combis.model.Document;
@@ -57,29 +63,46 @@ public class PersonServiceImpl implements IPersonService {
             while ((line = br.readLine()) != null) {
             	hashString+=line;
                 String[] personRow = line.split(cvsSplitBy);
+                
                 Person person = new Person();
-                if(personRow.length > 0 && !StringUtils.isEmpty(personRow[0]))
+                
+                if(personRow.length > 0 && !StringUtils.isEmpty(personRow[0]) ) {
                 	person.setFirstName(personRow[0]);
-                else
+                	if(!ObjectUtil.isLenghtOk(personRow[0], 50))
+                		person.addErrorMsg(message.getMessage(ERROR_CODE.ERR_TOO_LONG.getErrorCode(), new Object[] {"ime"}));
+                }else 
                 	person.addErrorMsg(message.getMessage(ERROR_CODE.ERR_MANDATORY.getErrorCode(), new Object[] {"ime"}));
                 
-                if(personRow.length > 1 && !StringUtils.isEmpty(personRow[1]))
+                
+                if(personRow.length > 1 && !StringUtils.isEmpty(personRow[1])) {
                 	person.setLastName(personRow[1]);
-                else
+                	if(!ObjectUtil.isLenghtOk(personRow[1], 50))
+                		person.addErrorMsg(message.getMessage(ERROR_CODE.ERR_TOO_LONG.getErrorCode(), new Object[] {"prezime"}));
+                }else
                 	person.addErrorMsg(message.getMessage(ERROR_CODE.ERR_MANDATORY.getErrorCode(), new Object[] {"prezime"}));
                 
-                if(personRow.length > 2 && !StringUtils.isEmpty(personRow[2]))
+                
+                if(personRow.length > 2 && !StringUtils.isEmpty(personRow[2])) {
                 	person.setZipCodeString(personRow[2],message.getMessage(ERROR_CODE.ERR_WRONG_ZIP_CODE.getErrorCode()));
-                else
+                	if(!ObjectUtil.isLenghtOk(personRow[2], 10))
+                		person.addErrorMsg(message.getMessage(ERROR_CODE.ERR_TOO_LONG.getErrorCode(), new Object[] {"poštanski broj"}));
+                }else
                 	person.addErrorMsg(message.getMessage(ERROR_CODE.ERR_MANDATORY.getErrorCode(), new Object[] {"poštanski broj"}));
                 
-                if(personRow.length > 3 && !StringUtils.isEmpty(personRow[3]))
+                
+                if(personRow.length > 3 && !StringUtils.isEmpty(personRow[3])) {
                 	person.setCity(personRow[3]);
-                else
+                	if(!ObjectUtil.isLenghtOk(personRow[3], 50))
+                		person.addErrorMsg(message.getMessage(ERROR_CODE.ERR_TOO_LONG.getErrorCode(), new Object[] {"grad"}));
+                }else
                 	person.addErrorMsg(message.getMessage(ERROR_CODE.ERR_MANDATORY.getErrorCode(), new Object[] {"grad"}));
                 
-                if(personRow.length > 4 && !StringUtils.isEmpty(personRow[4]))
+                
+                if(personRow.length > 4 && !StringUtils.isEmpty(personRow[4])) {
                 	person.setPhone(personRow[4]);
+                	if(!ObjectUtil.isLenghtOk(personRow[4], 30))
+                		person.addErrorMsg(message.getMessage(ERROR_CODE.ERR_TOO_LONG.getErrorCode(), new Object[] {"tel. broj"}));
+                }
                 
                 if(CollectionUtils.isEmpty(person.getErrorMsgs())){
 	                Person oldPerson = iPersonRepository.findByFirstNameAndLastNameAndZipCodeAndCityAndPhone(
@@ -88,6 +111,7 @@ public class PersonServiceImpl implements IPersonService {
 	                	person.addErrorMsg(message.getMessage(ERROR_CODE.ERR_ROW_EXISTS.getErrorCode()));
 	                }
                 }
+                
                 persons.add(person);
 
             }
@@ -95,13 +119,15 @@ public class PersonServiceImpl implements IPersonService {
             doc.setPersons(persons);
             String currDocHash = DigestUtils.md5Hex( hashString );
             doc.setHash( currDocHash);
-            
+           
             if(save) {
             	if(currDocHash.equals(saveFileHash)) {
 		            for(Person person:doc.getPersons()) {
 		    			if(CollectionUtils.isEmpty(person.getErrorMsgs()) ) {
 		    				Person oldPerson = iPersonRepository.findByFirstNameAndLastNameAndZipCodeAndCityAndPhone(
 				                		person.getFirstName(), person.getLastName(), person.getZipCode(), person.getCity(), person.getPhone());
+		    				
+		    				
 			                if(oldPerson == null) {
 			                	iPersonRepository.save(person);
 			                }
@@ -125,6 +151,7 @@ public class PersonServiceImpl implements IPersonService {
 		return doc;
 	}
 	
+
 	
 	
 }

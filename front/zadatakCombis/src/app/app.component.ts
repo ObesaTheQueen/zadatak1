@@ -25,7 +25,14 @@ export class AppComponent implements OnInit {
               private messageService: MessageService) { }
 
   ngOnInit() {
-
+    this.cols = [
+      { field: 'lastName', header: 'Prezime', width: '15%'},
+      { field: 'firstName', header: 'Ime', width: '15%' },
+      { field: 'zipCodeString', header: 'Poštanski broj', width: '15%'},
+      { field: 'city', header: 'Grad', width: '15%' },
+      { field: 'phone', header: 'Telefon', width: '10%' },
+      { field: 'errorMsgs', header: 'Greške', width: '30%' }
+  ];
 
   }
 
@@ -48,14 +55,7 @@ export class AppComponent implements OnInit {
       }
       );
     this.msgs = [];
-    this.cols = [
-        { field: 'lastName', header: 'Prezime', width: '15%'},
-        { field: 'firstName', header: 'Ime', width: '15%' },
-        { field: 'zipCodeString', header: 'Poštanski broj', width: '15%'},
-        { field: 'city', header: 'Grad', width: '15%' },
-        { field: 'phone', header: 'Telefon', width: '10%' },
-        { field: 'errorMsgs', header: 'Greške', width: '30%' }
-    ];
+
   }
 
   savePersonData() {
@@ -77,6 +77,6 @@ export class AppComponent implements OnInit {
                 this.msgs.push({severity: 'error', summary: 'Greška', detail: this.errorMessage});
       }
       );
- 
+
   }
 }

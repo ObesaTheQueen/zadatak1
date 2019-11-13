@@ -4,6 +4,7 @@ public enum ERROR_CODE {
 
 	ERR_WRONG_ZIP_CODE("err.zip.format"),
 	ERR_MANDATORY("err.mandatory.field"),
+	ERR_TOO_LONG("err.size.field"),
 	ERR_ROW_EXISTS("err.row.exists");
 	
 	String errorCode;

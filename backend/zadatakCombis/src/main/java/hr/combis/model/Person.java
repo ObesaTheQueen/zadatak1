@@ -11,12 +11,10 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.Transient;
+import javax.validation.constraints.Size;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.support.MessageSourceAccessor;
 import org.springframework.util.CollectionUtils;
 
-import hr.combis.enums.ERROR_CODE;
 import lombok.Data;
 
 @Data
@@ -30,6 +28,7 @@ public class Person {
 	private Long personId;
 	
 	@Column(name = "LAST_NAME", nullable = false)
+	@Size(max=50)
 	private String lastName;
 	@Column(name = "FIRST_NAME", nullable = false)
 	private String firstName;

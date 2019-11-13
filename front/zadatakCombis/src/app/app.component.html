@@ -10,16 +10,24 @@
      
       </div>
 </div>
-<p-table [columns]="cols" [value]="tableData" [scrollable]="true" scrollHeight="400px" [resizableColumns]="true">
-        <ng-template pTemplate="colgroup" let-columns >
+<p-table [columns]="cols" [value]="tableData" [scrollable]="true" scrollHeight="400px" [resizableColumns]="true" >
+     <ng-template pTemplate="colgroup" let-columns > 
             <colgroup>
                 <col *ngFor="let col of columns" [style.width]="col.width">
             </colgroup>
         </ng-template>
+    <ng-template pTemplate="header" let-columns>
+        <tr>
+            <th *ngFor="let col of columns" pResizableColumn>
+                {{col.header}}
+            </th>
+        </tr>
+    </ng-template>    
+ 
         <ng-template pTemplate="body" let-rowData let-columns="columns" >
                
             <tr  [ngClass]="rowData.errorMsgs != null?  'red_row' : null">
-                <td *ngFor="let col of columns" >
+                <td *ngFor="let col of columns" class="ui-resizable-column" >
                   <!--  <span [pTooltip]="rowData[col.field]" appendTo="body" 
                     style="position: relative;" [tooltipDisabled]="!rowData[col.field].exists">-->
                         {{rowData[col.field]}}

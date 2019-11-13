@@ -21,7 +21,7 @@ public class PersonDataController {
 	IPersonService personService;
 	
 	@RequestMapping(value = "/load", method = RequestMethod.GET)
-	@CrossOrigin(origins = "http://localhost:4200")
+	@CrossOrigin(origins = "*")
 	public ResponseEntity<RestResponse> loadData() throws BusinessInfrastructureException {
 		Document document = personService.loadDataFromFile();
 		RestResponse response = new RestResponse();
@@ -30,7 +30,7 @@ public class PersonDataController {
 	}
 	
 	@RequestMapping(value = "/save", method = RequestMethod.POST)
-	@CrossOrigin(origins = "http://localhost:4200")
+	@CrossOrigin(origins = "*")
 	public ResponseEntity<RestResponse> saveData(@RequestBody Document document) throws BusinessInfrastructureException {
 		Document doc = personService.loadPersonDataFile(true, document.getHash());
 		RestResponse response = new RestResponse();
