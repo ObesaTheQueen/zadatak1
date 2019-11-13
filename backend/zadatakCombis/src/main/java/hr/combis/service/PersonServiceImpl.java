@@ -69,46 +69,49 @@ public class PersonServiceImpl implements IPersonService {
                 if(personRow.length > 0 && !StringUtils.isEmpty(personRow[0]) ) {
                 	person.setFirstName(personRow[0]);
                 	if(!ObjectUtil.isLenghtOk(personRow[0], 50))
-                		person.addErrorMsg(message.getMessage(ERROR_CODE.ERR_TOO_LONG.getErrorCode(), new Object[] {"ime"}));
+                		addErrorMsg(person, message.getMessage(ERROR_CODE.ERR_TOO_LONG.getErrorCode(), new Object[] {"ime"}));
                 }else 
-                	person.addErrorMsg(message.getMessage(ERROR_CODE.ERR_MANDATORY.getErrorCode(), new Object[] {"ime"}));
+                	addErrorMsg(person, message.getMessage(ERROR_CODE.ERR_MANDATORY.getErrorCode(), new Object[] {"ime"}));
                 
                 
                 if(personRow.length > 1 && !StringUtils.isEmpty(personRow[1])) {
                 	person.setLastName(personRow[1]);
                 	if(!ObjectUtil.isLenghtOk(personRow[1], 50))
-                		person.addErrorMsg(message.getMessage(ERROR_CODE.ERR_TOO_LONG.getErrorCode(), new Object[] {"prezime"}));
+                		addErrorMsg(person, message.getMessage(ERROR_CODE.ERR_TOO_LONG.getErrorCode(), new Object[] {"prezime"}));
                 }else
-                	person.addErrorMsg(message.getMessage(ERROR_CODE.ERR_MANDATORY.getErrorCode(), new Object[] {"prezime"}));
+                	addErrorMsg(person, message.getMessage(ERROR_CODE.ERR_MANDATORY.getErrorCode(), new Object[] {"prezime"}));
                 
                 
                 if(personRow.length > 2 && !StringUtils.isEmpty(personRow[2])) {
                 	person.setZipCodeString(personRow[2],message.getMessage(ERROR_CODE.ERR_WRONG_ZIP_CODE.getErrorCode()));
+                	if(!checkZip(personRow[2]))
+                		addErrorMsg(person, message.getMessage(ERROR_CODE.ERR_WRONG_ZIP_CODE.getErrorCode()));
+                	
                 	if(!ObjectUtil.isLenghtOk(personRow[2], 10))
-                		person.addErrorMsg(message.getMessage(ERROR_CODE.ERR_TOO_LONG.getErrorCode(), new Object[] {"poštanski broj"}));
+                		addErrorMsg(person, message.getMessage(ERROR_CODE.ERR_TOO_LONG.getErrorCode(), new Object[] {"poštanski broj"}));
                 }else
-                	person.addErrorMsg(message.getMessage(ERROR_CODE.ERR_MANDATORY.getErrorCode(), new Object[] {"poštanski broj"}));
+                	addErrorMsg(person, message.getMessage(ERROR_CODE.ERR_MANDATORY.getErrorCode(), new Object[] {"poštanski broj"}));
                 
                 
                 if(personRow.length > 3 && !StringUtils.isEmpty(personRow[3])) {
                 	person.setCity(personRow[3]);
                 	if(!ObjectUtil.isLenghtOk(personRow[3], 50))
-                		person.addErrorMsg(message.getMessage(ERROR_CODE.ERR_TOO_LONG.getErrorCode(), new Object[] {"grad"}));
+                		addErrorMsg(person, message.getMessage(ERROR_CODE.ERR_TOO_LONG.getErrorCode(), new Object[] {"grad"}));
                 }else
-                	person.addErrorMsg(message.getMessage(ERROR_CODE.ERR_MANDATORY.getErrorCode(), new Object[] {"grad"}));
+                	addErrorMsg(person, message.getMessage(ERROR_CODE.ERR_MANDATORY.getErrorCode(), new Object[] {"grad"}));
                 
                 
                 if(personRow.length > 4 && !StringUtils.isEmpty(personRow[4])) {
                 	person.setPhone(personRow[4]);
                 	if(!ObjectUtil.isLenghtOk(personRow[4], 30))
-                		person.addErrorMsg(message.getMessage(ERROR_CODE.ERR_TOO_LONG.getErrorCode(), new Object[] {"tel. broj"}));
+                		addErrorMsg(person, message.getMessage(ERROR_CODE.ERR_TOO_LONG.getErrorCode(), new Object[] {"tel. broj"}));
                 }
                 
                 if(CollectionUtils.isEmpty(person.getErrorMsgs())){
 	                Person oldPerson = iPersonRepository.findByFirstNameAndLastNameAndZipCodeAndCityAndPhone(
 		                		person.getFirstName(), person.getLastName(), person.getZipCode(), person.getCity(), person.getPhone());
 	                if(oldPerson != null) {
-	                	person.addErrorMsg(message.getMessage(ERROR_CODE.ERR_ROW_EXISTS.getErrorCode()));
+	                	addErrorMsg(person, message.getMessage(ERROR_CODE.ERR_ROW_EXISTS.getErrorCode()));
 	                }
                 }
                 
@@ -151,7 +154,23 @@ public class PersonServiceImpl implements IPersonService {
 		return doc;
 	}
 	
+	public void addErrorMsg(Person person, String msg) {
+		if(CollectionUtils.isEmpty(person.getErrorMsgs())){
+			person.setErrorMsgs(new ArrayList<String>());
+			person.getErrorMsgs().add(msg);
+		}else
+			person.getErrorMsgs().add(msg);
+	}
+	
+	public boolean checkZip(String zipCodeString) {
+		try {
+			Integer zipCode = Integer.valueOf(zipCodeString);
+			return true;
+		}catch(NumberFormatException ex) {
+			return false;
 
+		}
+	}
 	
 	
 }
