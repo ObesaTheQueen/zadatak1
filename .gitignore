@@ -8,6 +8,7 @@ backend/.metadata/
 # compiled output
 dist/
 target/
+logs/
 tmp/
 /out-tsc
 /vendor
