@@ -83,9 +83,11 @@ public class PersonServiceImpl implements IPersonService {
                 
                 
                 if(personRow.length > 2 && !StringUtils.isEmpty(personRow[2])) {
-                	person.setZipCodeString(personRow[2],message.getMessage(ERROR_CODE.ERR_WRONG_ZIP_CODE.getErrorCode()));
+                	person.setZipCodeString(personRow[2]);
                 	if(!checkZip(personRow[2]))
                 		addErrorMsg(person, message.getMessage(ERROR_CODE.ERR_WRONG_ZIP_CODE.getErrorCode()));
+                	else
+                		person.setZipCode(Integer.valueOf(personRow[2]));
                 	
                 	if(!ObjectUtil.isLenghtOk(personRow[2], 10))
                 		addErrorMsg(person, message.getMessage(ERROR_CODE.ERR_TOO_LONG.getErrorCode(), new Object[] {"poštanski broj"}));

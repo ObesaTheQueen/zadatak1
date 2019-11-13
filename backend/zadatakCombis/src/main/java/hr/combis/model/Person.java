@@ -52,25 +52,4 @@ public class Person {
 	@Transient
 	private boolean exists = false;
 
-	public void setZipCodeString(String zipCodeString, String errorMsg) {
-		Integer zipCode;
-		this.setZipCodeString(zipCodeString);
-		try {
-			
-			zipCode = Integer.valueOf(zipCodeString);
-			this.setZipCode(zipCode);
-			
-		}catch(NumberFormatException ex) {
-			addErrorMsg(errorMsg);
-
-		}
-	}
-	
-	public void addErrorMsg(String msg) {
-		if(CollectionUtils.isEmpty(errorMsgs)){
-			errorMsgs = new ArrayList<String>();
-			errorMsgs.add(msg);
-		}else
-			errorMsgs.add(msg);
-	}
 }
